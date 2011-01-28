@@ -174,7 +174,6 @@ withusb)
 	wget http://daviddarts.com/piratebox/piratebox-logo.png
 	wget http://daviddarts.com/piratebox/.READ.ME.htm
 	wget http://daviddarts.com/piratebox/.BACK.TO.MENU.htm
-	wget http://hackaday.com/favicon.ico
 
 	sed -i "s#freedrop#$pb_hostname#g" .READ.ME.htm
 	sed -i "s#FreeDrop#PirateBox#g" .READ.ME.htm
@@ -209,7 +208,7 @@ startsrv() {
 }
 
 start() {
-  startsrv &>/root/pb.log &
+  startsrv &>/dev/null &
 }
 
 stop() {
@@ -225,13 +224,18 @@ EOF
 	/etc/init.d/piratebox enable
 
 	# enable full redirect of http traffic
-	uci set "dhcp.@dnsmasq[0].address=/#/$pb_ip"
+	uci add dhcp domain
+	uci set "dhcp.@domain[-1].name=#"
+	uci set "dhcp.@domain[-1].ip=$pb_ip"
 	uci set "firewall.www=redirect"
 	uci set "firewall.www.src=lan"
 	uci set "firewall.www.proto=tcp"
 	uci set "firewall.www.src_dport=80"
 	uci set "firewall.www.dest_ip=$pb_ip"
 	uci set "firewall.www.dest_port=80"
+	# patch dnsmasq start script to properly handle wildcards
+	sed -i 's#^.*\${fqdn\%\.\*}\" ==.*$## ; s#^.*fqdn=\"\$fqdn.*$##' \
+	  /etc/init.d/dnsmasq
 
 	# configure network
 	uci set "system.@system[0].hostname=$pb_hostname"
