@@ -17,8 +17,11 @@ TODO:
 
 REQUIREMENTS:
  - Decently powerful router with USB2.0 port which is supported by OpenWRT.
-   It should have 200MHz, 32 MByte RAM and 4 MByte flash. If you want a
+   It should have 200MHz, 32 MByte RAM and 8 MByte flash. If you want a
    recommendation: get a Buffalo WZR-HP-G300NH or an Asus WL-500gP.
+ - PirateBox can be installed on 4 MByte flash, but there is no space
+   for e2fsprogs which are required for automated setup of the loop
+   ext3 partition on the USB disk.
  - An external USB hard drive (UMS compatible) formattet with FAT32.
  - Two ethernet cables
 

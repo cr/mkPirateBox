@@ -73,9 +73,9 @@ init)
 
 	opkg update
 	opkg install kmod-usb2 kmod-usb-storage kmod-fs-vfat \
-	  kmod-nls-cp437 kmod-nls-cp850 kmod-nls-iso8859-15 \
-	  kmod-nls-iso8859-1 block-hotplug kmod-fs-ext3 e2fsprogs \
-	  fdisk kmod-loop
+	  kmod-nls-cp437 kmod-nls-cp850 kmod-nls-iso8859-1 \
+	  kmod-nls-iso8859-15 block-hotplug kmod-fs-ext3 \
+	  kmod-loop e2fsprogs
 
 	# prepare USB storage
 	mkdir -p "$pb_usbmount"
