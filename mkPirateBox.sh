@@ -176,7 +176,9 @@ withusb)
 	wget http://daviddarts.com/piratebox/.BACK.TO.MENU.htm
 
 	sed -i "s#freedrop#$pb_hostname#g" .READ.ME.htm
+	sed -i "s#freedrop#$pb_hostname#g" .BACK.TO.MENU.htm
 	sed -i "s#FreeDrop#PirateBox#g" .READ.ME.htm
+	sed -i "s#FreeDrop#PirateBox#g" .BACK.TO.MENU.htm
 
 	[ -d /usr/local/bin ] || mkdir -p /usr/local/bin
 	cd /usr/local/bin
