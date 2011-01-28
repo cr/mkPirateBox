@@ -6,7 +6,7 @@
 # Released under GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
 
 FEATURES:
- - Execute this script to your fresh OpenWRT Backfire installation
+ - Execute this script on your fresh OpenWRT Backfire installation
    and out comes (hopefully) a ready-to-use PirateBox.
 
 TODO:
