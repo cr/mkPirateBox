@@ -1,0 +1,54 @@
+###########################################################################
+# mkPirateBox.sh v0.1
+# Shell script that installs PirateBox to your fresh OpenWRT router
+# (C) 2011, Christiane Ruetten, cr@23bit.net
+#
+# Released under GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
+
+FEATURES:
+ - Execute this script to your fresh OpenWRT Backfire installation
+   and out comes (hopefully) a ready-to-use PirateBox.
+
+TODO:
+ - Test other Platforms than Asus WL-500gP
+ - Error checking
+ - Move stage two completely into the init script
+ - Wrap it up in an opk package
+
+REQUIREMENTS:
+ - Decently powerful router with USB2.0 port which is supported by OpenWRT.
+   It should have 32 MByte RAM and 4 MByte flash. If you want a
+   recommendation: get a Buffalo WZR-HP-G300NH or an Asus WL-500gP.
+ - An external USB hard drive (UMS compatible) formattet with FAT32.
+ - Two ethernat cables
+
+INSTALL:
+  - Install a fresh OpenWRT "Backfire" 10.03.1 onto your router.
+    I mean really fresh. Do not touch it after you flashed it!
+  - Connect the WAN port to your gateway and a LAN port to your
+    computer. This ensures the router can download packages.
+  - Connect your USB drive. The script assumes a single partition
+    with a FAT32 file system.
+  - telnet into the router on 192.168.1.1.
+  - cd /tmp
+  - wget https://github.com/cr/mkPirateBox/raw/master/mkPirateBox.sh
+  - chmod +x mkPirateBox.sh
+  - ./mkPirateBox.sh
+  - Follow the instructions until the first reset.
+  - Wait for the open wireless network "PirateBox" to appear.
+  - Connect and open any web page.
+  - If you see the PirateBox menu, you're done.
+  - See /root/mkPirateBox.log in case anything went wrong during
+    the invisible setup phase 2.
+  - To start over, rm -rf /overlay/* or reflash OpenWRT.
+
+REFERENCES:
+ - The PirateBox project:
+   http://wiki.daviddarts.com/PirateBox_DIY
+ - OpenWRT - List of supported devices:
+   http://wiki.openwrt.org/toh/start
+ - OpenWRT documentation (look for tftp installation):
+   http://wiki.openwrt.org/doc/start
+ - OpenWRT "Backfire" 10.04.1-r4 images:
+   http://downloads.openwrt.org/backfire/10.03.1-rc4/
+
