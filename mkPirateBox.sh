@@ -1,4 +1,4 @@
-#t!/bin/ash
+#!/bin/ash
 ###########################################################################
 # mkPirateBox.sh v0.1
 # Shell script for installing PirateBox to your fresh OpenWRT router
