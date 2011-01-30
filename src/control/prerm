@@ -1,0 +1,9 @@
+#!/bin/ash
+
+# TODO: undo UCI changes, undo dnsmasq patch
+
+/etc/init.d/luci_fixtime enable
+/etc/init.d/luci_dhcp_migrate enable
+/etc/init.d/uhttpd enable
+/etc/init.d/piratebox disable
+

@@ -1,0 +1,74 @@
+#!/bin/ash
+
+. /etc/piratebox.conf
+
+# check if root password is not set yet
+if grep '^root:!:' /etc/passwd >/dev/null
+then
+  echo "Please set a decent root password..."
+  while ! passwd
+  do
+    echo "Try again!"
+  done
+  echo "Next time you log in, you must use ssh."
+fi
+
+# prepare usb disk for mounting
+mkdir -p "$pb_usbmount"
+id=$(uci add fstab mount)
+uci set "fstab.$id=mount"
+uci set "fstab.$id.target=$pb_usbmount"
+uci set "fstab.$id.device=$pb_usbdevice"
+uci set "fstab.$id.fstype=vfat"
+uci set "fstab.$id.options=rw,sync"
+uci set "fstab.$id.enabled=1"
+uci set "fstab.$id.enabled_fsck=0"
+
+# configure network
+uci set "system.@system[0].hostname=$pb_hostname"
+echo "127.0.0.1 $pb_hostname localhost." >/etc/hosts
+echo "$pb_ip $pb_hostname" >>/etc/hosts
+uci set "wireless.radio0.disabled=0"
+uci set "wireless.@wifi-iface[0].ssid=$pb_wireless_ssid"
+uci set "network.lan.ipaddr=$pb_ip"
+
+# redirect all 80/tcp traffic to the PirateBox
+id=$(uci add firewall redirect)
+uci set "firewall.$id=redirect"
+uci set "firewall.$id.src=lan"
+uci set "firewall.$id.proto=tcp"
+uci set "firewall.$id.src_dport=80"
+uci set "firewall.$id.dest_ip=$pb_ip"
+uci set "firewall.$id.dest_port=80"
+
+# redirect all DNS requests to PirateBox IP
+id=$(uci add dhcp domain)
+uci set "dhcp.$id=domain"
+uci set "dhcp.$id.name=#"
+uci set "dhcp.$id.ip=$pb_ip"
+
+# CAVE: ugly hack, patching a preinstalled file
+# patch dnsmasq start script to properly handle domain wildcards
+sed -i 's#^.*\${fqdn\%\.\*}\" ==.*$## ; s#^.*fqdn=\"\$fqdn.*$##' \
+  /etc/init.d/dnsmasq
+
+# commit all UCI changes
+uci commit
+
+# disable web interface, start droopy instead
+/etc/init.d/uhttpd stop
+/etc/init.d/uhttpd disable
+/etc/init.d/luci_fixtime stop
+/etc/init.d/luci_fixtime disable
+/etc/init.d/luci_dhcp_migrate stop
+/etc/init.d/luci_dhcp_migrate disable
+/etc/init.d/piratebox enable
+
+echo
+echo "PirateBox wireless SSID: $pb_wireless_ssid"
+echo "PirateBox DNS and hostname: $pb_hostname"
+echo "PirateBox IP address: $pb_ip"
+echo
+echo "Reboot the router and reconnect wirelessly."
+
+

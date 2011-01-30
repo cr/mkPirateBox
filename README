@@ -1,27 +1,27 @@
 ###########################################################################
-# mkPirateBox.sh v0.1
-# Shell script that installs PirateBox to your fresh OpenWRT router
+# mkPirateBox v0.2
+# IPKG that installs PirateBox to your fresh OpenWRT router
 # (C) 2011, Christiane Ruetten, cr@23bit.net
 #
 # Released under GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
 
 FEATURES:
- - Execute this script on your fresh OpenWRT Backfire installation
-   and out comes (hopefully) a ready-to-use PirateBox.
+ - Install this IPKG on your fresh OpenWRT "Backfire", and out comes
+   (hopefully) a ready-to-use PirateBox.
+ - Now supports devices with 4 MByte flash
+ - Tested on Asus WL-500gP, Asus WL-500g and Buffalo WZR-HP-G300NH
 
 TODO:
- - Test other Platforms than Asus WL-500gP
+ - Test other platforms
  - Error checking
- - Move stage two completely into the init script
- - Wrap it up in an opk package
+ - Gracefully handle fresh USB storage after setup
 
 REQUIREMENTS:
  - Decently powerful router with USB2.0 port which is supported by OpenWRT.
-   It should have 200MHz, 32 MByte RAM and 8 MByte flash. If you want a
+   It should have 200MHz, 32 MByte RAM and 4 MByte flash. If you want a
    recommendation: get a Buffalo WZR-HP-G300NH or an Asus WL-500gP.
- - PirateBox can be installed on 4 MByte flash, but there is no space
-   for e2fsprogs which are required for automated setup of the loop
-   ext3 partition on the USB disk.
+ - A 125 MHz system works, but HTTP uploads may drop dramatically to
+   about 100 KByte/s. Also observed instability.
  - An external USB hard drive (UMS compatible) formattet with FAT32.
  - Two ethernet cables
 
@@ -34,17 +34,16 @@ INSTALL:
     with a FAT32 file system.
   - telnet into the router on 192.168.1.1.
   - cd /tmp
-  - opkg update && opkg install wget
-  - wget --no-check-certificate https://github.com/cr/mkPirateBox/raw/master/mkPirateBox.sh
-  - chmod +x mkPirateBox.sh
-  - ./mkPirateBox.sh
-  - Follow the instructions until the first reset.
+  - wget http://cr.23bit.net/piratebox/piratebox_1-1_all.ipk
+    (Sorry, github only supports https downloads.)
+  - opkg update && opkg install piratebox*
+  - When prompted, set a root password.
+  - After setup has finished, reboot the router.
   - Wait for the open wireless network "PirateBox" to appear.
   - Connect and open any web page.
   - If you see the PirateBox menu, you're done.
-  - See /root/mkPirateBox.log in case anything went wrong during
-    the invisible setup phase 2.
-  - To start over, rm -rf /overlay/* or reflash OpenWRT.
+  - You can disconnect the WAN connection now.
+  - To start over, rm -rf /overlay/* and reboot or reflash OpenWRT.
 
 REFERENCES:
  - The PirateBox project:
