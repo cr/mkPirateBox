@@ -16,6 +16,15 @@ TODO:
  - Does not uninstall cleanly
  - Better error checking
 
+PLEASE HELP:
+ - On unsupported router models, setup will most likely fail during
+   wireless setup. If you decide to try mkPirateBox on an untested model,
+   please send send me feedback on how it went, including
+   - your router model
+   - output of the command
+     "cat /etc/openwrt_release /etc/config/wireless /etc/config/network".
+ - Thanks! :)
+
 REQUIREMENTS:
  - Decently powerful router with USB2.0 port which is supported by OpenWRT.
    It should have 200MHz, 32 MByte RAM and 4 MByte flash. If you want a
