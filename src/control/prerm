@@ -7,3 +7,5 @@
 /etc/init.d/uhttpd enable
 /etc/init.d/piratebox disable
 
+/etc/init.d/piratebox stop
+

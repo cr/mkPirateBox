@@ -1,141 +1,41 @@
 #!/bin/sh /etc/rc.common
+
+NAME=piratebox
 START=80
+STOP=20
+EXTRA_COMMANDS="init update nodns"
+EXTRA_HELP="	init	PirateBoxify a fresh USB disk
+	update	Update PirateBox files on USB disk
+	nodns	Disable local DNS redirection through dnsmasq"
 
-. /etc/piratebox.conf
+# include PirateBox shared functionality
+. /etc/piratebox.common
 
-piratebox_init() {
-
-  #CAVE: /etc/config/fstab is currently broken
-  #Workaround time
-
-  # mount USB disk
-  [ -d "$pb_usbmount" ] || mkdir -p "$pb_usbmount"
-  if ! mount "$pb_usbdevice" "$pb_usbmount"
-  then
-    echo "ERROR: piratebox: unable to mount USB storage" >&2
-    exit 5
-  fi
-
-  [ -d "$pb_usbdir" ] || mkdir -p "$pb_usbdir"
-
-  # create a swap file
-  echo "Creating swapspace..."
-  swapoff "$pb_swapimg" &>/dev/null
-  dd if=/dev/zero of="$pb_swapimg" bs=1M count=32
-  mkswap "$pb_swapimg"
-  uci set "fstab.@swap[0].device=$pb_swapimg"
-  uci set "fstab.@swap[0].enabled=1"
-
-  # create an ext3 image file
-  echo "Creating ext loop image..."
-  # use a preformatted image to get rid of e2fsprogs dependency
-  #dd if=/dev/zero of="$pb_extimg" bs=1M count=16
-  #echo y | mkfs.ext3 "$pb_extimg"
-  umount "$pb_extimg" &>/dev/null
-  gzip -dc /usr/share/piratebox/OpenWRT.img.gz >"$pb_extimg"
-  [ -d "$pb_extmount" ] || mkdir -p "$pb_extmount"
-  id=$(uci add fstab mount)
-  uci set "fstab.$id=mount"
-  uci set "fstab.$id.target=$pb_extmount"
-  uci set "fstab.$id.device=$pb_extimg"
-  uci set "fstab.$id.options=loop"
-  uci set "fstab.$id.enabled=1"
-
-  # temporarily manually mount ext fs
-  if ! mount -o loop "$pb_extimg" "$pb_extmount"
-  then
-    echo "ERROR: piratebox: unable to mount ext loop image" >&2
-    exit 5
-  fi
-
-  # prepare opkg, PATH and LD_LIBRARY_PATH for /usr/local
-  grep "^dest piratebox" /etc/opkg.conf \
-    || echo "dest piratebox $pb_extmount" >>/etc/opkg.conf
-  # CAVE: a bug during startup time prevents LD_LIBRARY_PATH
-  # and PATH from working as expected. For now, both are set
-  # directly in the init script.
-  #sed -i 's#export PATH=\(.*\)#export PATH=\1:/usr/local/bin\nexport LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib#' \
-  #  /etc/profile
-  #sed -i 's#export PATH=\(.*\)#export PATH=\1:/usr/local/bin\nexport LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib#' \
-  #  /etc/preinit
-
-  # fix for ext packages not installing to usr
-  [ -d "$pb_extmount/usr/lib" ] || mkdir -p "$pb_extmount/usr/lib"
-  ln -sf "$pb_extmount/usr/lib" "$pb_extmount/lib"
-
-  # temporarily disable local DNS per dnsmasq
-  cp /tmp/resolv.conf.auto /tmp/resolv.conf
-
-  # install python to piratebox storage
-  opkg update
-  opkg -d piratebox install python
-
-  # link ext /usr to local file system
-  ln -s "$pb_extmount/usr" /usr/local
-
-  # get PirateBox files
-  [ -d "$pb_share" ] || mkdir -p "$pb_share"
-  mkdir -p "$pb_share"
-  cd "$pb_share"
-  wget http://daviddarts.com/piratebox/piratebox-logo.png -O piratebox-logo.png
-  wget http://daviddarts.com/piratebox/.READ.ME.htm -O .READ.ME.htm
-  wget http://daviddarts.com/piratebox/.BACK.TO.MENU.htm -O .BACK.TO.MENU.htm
-  # adjust hostname
-  sed -i "s#://http://piratebox#http://$pb_hostname#g" .READ.ME.htm
-  sed -i "s#://http://piratebox#http://$pb_hostname#g" .BACK.TO.MENU.htm
-
-  # install PirateBox's droopy port
-  [ -d /usr/local/bin ] || mkdir -p /usr/local/bin
-  cd /usr/local/bin
-  wget http://daviddarts.com/piratebox/droopy -O droopy
-  chmod +x droopy
-
-  # commit UCI changes
-  uci commit
-
+nodns() {
+  pb_nodns
 }
 
-startsrv() {
-  # CAVE: /etc/config/fstab is currently broken
-  # Ugly workaround time
-  # CAVE: more workarounds for early start-up
-  export PATH=$PATH:/usr/local/bin
-  export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
-  cd "$pb_share"
-  python /usr/local/bin/droopy \
-    -p "$pb_share/piratebox-logo.png" \
-    -d "$pb_share" \
-    -m "<p><br><b>1.</b> Learn more about the project \
-        <a href="http://$pb_hostname:8001/.READ.ME.htm"><b>here</b></a>. \
-        <p><b>2.</b> Click above to begin sharing.</p> \
-        <b>3.</b> Browse and download files \
-        <a href="http://$pb_hostname:8001"><b>here</b></a>." &
-  python -m SimpleHTTPServer 8001 &
+init() {
+  pb_init
+}
+
+update() {
+  pb_update
 }
 
 start() {
-  if [ ! -e "$pb_usbdevice" ]
+  pb_mount usb
+  # init if we have a fresh USB disk
+  if [ ! -d "$pb_usbdir" ]
   then
-    echo "ERROR: piratebox requires USB storage to run" >&2
-    exit 5
+    pb_init
+    pb_update
   fi
-
-  mount "$pb_device" "$pb_usbmount" &>/dev/null
-  mount -o loop "$pb_extimg" "$pb_extmount" &>/dev/null
-  swapon "$pb_swapimg" &>/dev/null
-
-  if [ "$2" == "init" ] || [ ! -d "$pb_usbdir" ]
-  then
-    piratebox_init
-  fi  
-  if [ "$2" != "init" ]
-  then
-    startsrv &>/dev/null &
-  fi
+  # be silent
+  pb_start &>/dev/null
 }
 
 stop() {
-  # CAVE: a bit strong
-  killall python
+  pb_stop
 }
 
