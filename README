@@ -28,6 +28,8 @@ REQUIREMENTS:
 INSTALL:
   - Install a fresh OpenWRT "Backfire" 10.03.1 onto your router.
     I mean really fresh. Do not touch it after you flashed it!
+    If you already have an unclean install, do rm -rf /overlay/*
+    and reboot the router.
   - Connect the WAN port to your gateway and a LAN port to your
     computer. This ensures the router can download packages.
   - Connect your USB drive. The script assumes a single partition
@@ -43,8 +45,8 @@ INSTALL:
   - Connect wirelessly and open any web page.
   - If you see the PirateBox menu, you're done.
   - You can disconnect the WAN connection now.
-  - To completely uninstall, rm -rf /overlay/* and reboot or reflash
-    OpenWRT.
+  - To start over or completely uninstall, rm -rf /overlay/* and
+    reboot or reflash OpenWRT.
 
 REFERENCES:
  - The PirateBox project:
