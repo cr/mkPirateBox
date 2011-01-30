@@ -8,4 +8,4 @@
 /etc/init.d/piratebox disable
 
 /etc/init.d/piratebox stop
-
+/etc/init.d/piratebox nodns

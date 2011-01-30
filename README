@@ -1,5 +1,5 @@
 ###########################################################################
-# mkPirateBox v0.2
+# mkPirateBox v0.2-1
 # IPKG that installs PirateBox to your fresh OpenWRT router
 # (C) 2011, Christiane Ruetten, cr@23bit.net
 #
@@ -34,7 +34,7 @@ INSTALL:
     with a FAT32 file system.
   - telnet into the router on 192.168.1.1.
   - cd /tmp
-  - wget http://cr.23bit.net/piratebox/piratebox_1-1_all.ipk
+  - wget http://cr.23bit.net/piratebox/piratebox_0.2-1_all.ipk
     (Sorry, github only supports https downloads.)
   - opkg update && opkg install piratebox*
   - When prompted, set a root password.

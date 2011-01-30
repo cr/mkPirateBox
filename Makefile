@@ -1,5 +1,5 @@
 NAME = piratebox
-VERSION = 1-1
+VERSION = 0.2-1
 ARCH = all
 IPK = $(NAME)_$(VERSION)_$(ARCH).ipk
 IPKDIR = src

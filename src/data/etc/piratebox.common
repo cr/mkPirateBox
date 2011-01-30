@@ -67,7 +67,6 @@ pb_umount() {
       usb)
 	  pb_ismounted "$pb_usbmount" || continue
           pb_umount swap ext
-	  [ -d "$pb_usbmount" ] || mkdir -p "$pb_usbmount"
           if ! umount "$pb_usbmount"
           then
             echo "${initscript}: WARNING: unable to umount USB storage" >&2
@@ -77,10 +76,9 @@ pb_umount() {
           # losetup -d here just in case user umounted manually
           losetup -d /dev/loop0 &>/dev/null
 	  pb_ismounted "$pb_extmount" || continue
-	  [ -d "$pb_extmount" ] || mkdir -p "$pb_extmount"
-          if ! mount -o loop,rw,sync "$pb_extimg" "$pb_extmount"
+          if ! umount "$pb_extmount"
           then
-            echo "${initscript}: WARNING: unable to mount ext image" >&2
+            echo "${initscript}: WARNING: unable to umount ext image" >&2
           fi
           losetup -d /dev/loop0
           ;;
@@ -158,11 +156,13 @@ pb_usbconfig() {
 }
 
 pb_needswap() {
-  [ -e "$pb_swapimg" ]
+  [ ! -e "$pb_swapimg" ]
 }
 
 pb_mkswap() {
   pb_umount swap
+  pb_mount usb
+  [ -d "$(dirname $pb_swapimg)" ] || mkdir -p "$(dirname $pb_swapimg)"
   # create a swap file
   dd if=/dev/zero of="$pb_swapimg" bs=1M count=32
   mkswap "$pb_swapimg"
@@ -172,11 +172,15 @@ pb_mkswap() {
 }
 
 pb_needextimg() {
-  [ -e "$pb_extimg" ]
+  # [ ! -e "$pb_extimg" ]
+  # always re-create ext image because of opkg woes
+  true
 }
 
 pb_mkextimg() {
-  pb_umount usb
+  pb_umount ext
+  pb_mount usb
+  [ -d "$(dirname $pb_extimg)" ] || mkdir -p "$(dirname $pb_extimg)"
   # use a preformatted image to get rid of e2fsprogs dependency
   #dd if=/dev/zero of="$pb_extimg" bs=1M count=16
   #echo y | mkfs.ext3 "$pb_extimg"
@@ -252,8 +256,8 @@ pb_update() {
   wget http://daviddarts.com/piratebox/.READ.ME.htm -O .READ.ME.htm
   wget http://daviddarts.com/piratebox/.BACK.TO.MENU.htm -O .BACK.TO.MENU.htm
   # adjust hostname
-  sed -i "s#://http://piratebox#http://$pb_hostname#g" .READ.ME.htm
-  sed -i "s#://http://piratebox#http://$pb_hostname#g" .BACK.TO.MENU.htm
+  sed -i "s#http://piratebox#http://$pb_hostname#g" .READ.ME.htm
+  sed -i "s#http://piratebox#http://$pb_hostname#g" .BACK.TO.MENU.htm
 
   # install PirateBox droopy port
   [ -d /usr/local/bin ] || mkdir -p /usr/local/bin
@@ -269,14 +273,14 @@ pb_start() {
 local html=$(cat <<EOF
 <p><br>
   <b>1.</b> Learn more about the project
-    <a href=\\"http://$pb_hostname:8001/.READ.ME.htm\\"><b>here</b></a>.
+    <a href="http://$pb_hostname:8001/.READ.ME.htm"><b>here</b></a>.
 </p>
 <p>
   <b>2.</b> Click above to begin sharing.
 </p>
 <p>
   <b>3.</b> Browse and download files
-  <a href=\\"http://$pb_hostname:8001\\"><b>here</b></a>.
+  <a href="http://$pb_hostname:8001"><b>here</b></a>.
 </p>
 EOF
 )
@@ -286,7 +290,7 @@ EOF
   cd "$pb_share"
   start-stop-daemon -S -x python \
     -p /var/run/${NAME}.droopy.pid \
-    -c nobody:nogroup -m -b --
+    -m -b -- \
     /usr/local/bin/droopy \
     -p "$pb_share/piratebox-logo.png" \
     -d "$pb_share" -m "$html"
