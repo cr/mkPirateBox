@@ -13,8 +13,8 @@ FEATURES:
 
 TODO:
  - Test other platforms
- - Error checking
- - Gracefully handle fresh USB storage after setup
+ - Clean up config and DNS redirection after remove
+ - Better error checking
 
 REQUIREMENTS:
  - Decently powerful router with USB2.0 port which is supported by OpenWRT.
