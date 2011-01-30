@@ -13,7 +13,7 @@ FEATURES:
 
 TODO:
  - Test other platforms
- - Clean up config and DNS redirection after remove
+ - Does not uninstall cleanly
  - Better error checking
 
 REQUIREMENTS:
@@ -21,7 +21,7 @@ REQUIREMENTS:
    It should have 200MHz, 32 MByte RAM and 4 MByte flash. If you want a
    recommendation: get a Buffalo WZR-HP-G300NH or an Asus WL-500gP.
  - A 125 MHz system works, but HTTP uploads may drop dramatically to
-   about 100 KByte/s. Also observed instability.
+   about 100 KByte/s.
  - An external USB hard drive (UMS compatible) formattet with FAT32.
  - Two ethernet cables
 
@@ -38,12 +38,13 @@ INSTALL:
     (Sorry, github only supports https downloads.)
   - opkg update && opkg install piratebox*
   - When prompted, set a root password.
-  - After setup has finished, reboot the router.
-  - Wait for the open wireless network "PirateBox" to appear.
-  - Connect and open any web page.
+  - Wait for the setup to finish which is when the open wireless
+    network "PirateBox" appears.
+  - Connect wirelessly and open any web page.
   - If you see the PirateBox menu, you're done.
   - You can disconnect the WAN connection now.
-  - To start over, rm -rf /overlay/* and reboot or reflash OpenWRT.
+  - To completely uninstall, rm -rf /overlay/* and reboot or reflash
+    OpenWRT.
 
 REFERENCES:
  - The PirateBox project:
