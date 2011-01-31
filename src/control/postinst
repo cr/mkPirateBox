@@ -14,7 +14,6 @@ then
   echo "Next time you log in, you must use ssh."
 fi
 
-
 # disable web interface, start PirateBox instead
 /etc/init.d/uhttpd stop
 /etc/init.d/uhttpd disable
@@ -44,7 +43,7 @@ echo
 echo "PirateBox wireless SSID: $pb_wireless_ssid"
 echo "PirateBox DNS and hostname: $pb_hostname"
 echo "PirateBox LAN IP address: $pb_ip"
-echo "PirateBox shared directory: $pd_share"
+echo "PirateBox shared directory: $pb_share"
 echo
 echo "Setup complete, PirateBox started."
 echo "You can remove the WAN connection now."

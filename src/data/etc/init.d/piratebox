@@ -13,7 +13,7 @@ EXTRA_HELP="	setup	Activate current USB and network configuration
 . /etc/piratebox.common
 
 setup() {
-  pb_usbsetup
+  pb_usbconfig
   pb_netconfig
 }
 
