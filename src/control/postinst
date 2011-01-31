@@ -14,8 +14,6 @@ then
   echo "Next time you log in, you must use ssh."
 fi
 
-# configure USB and network
-/etc/init.d/piratebox setup
 
 # disable web interface, start PirateBox instead
 /etc/init.d/uhttpd stop
@@ -26,13 +24,19 @@ fi
 /etc/init.d/luci_dhcp_migrate disable
 /etc/init.d/piratebox enable
 
+# configure USB, network
+/etc/init.d/piratebox setup
+
+# prepare USB partition and install PirateBox
 /etc/init.d/piratebox init
 /etc/init.d/piratebox update
 
+# activate config changes
 /etc/init.d/firewall restart
 /etc/init.d/dnsmasq restart
 wifi
 
+# start PirateBox service
 /etc/init.d/piratebox start
 
 # give some user feedback
@@ -40,6 +44,7 @@ echo
 echo "PirateBox wireless SSID: $pb_wireless_ssid"
 echo "PirateBox DNS and hostname: $pb_hostname"
 echo "PirateBox LAN IP address: $pb_ip"
+echo "PirateBox shared directory: $pd_share"
 echo
 echo "Setup complete, PirateBox started."
 echo "You can remove the WAN connection now."
