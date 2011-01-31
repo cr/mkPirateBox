@@ -20,8 +20,10 @@ TODO:
  - Better error checking
 
 PLEASE HELP:
- - On unsupported router models, setup will most likely fail during
-   wireless setup. If you decide to try mkPirateBox on an untested model,
+ - I expect mkPirateBox v0.2+ to run on many or even most untested router
+   models. If something goes wrong, installation will most likely fail
+   during wireless setup. I usually can make it easily work if you help me
+   out. If you decide to try mkPirateBox on an untested router model,
    please send send me feedback on how it went, including
    - your router model
    - output of the command
@@ -30,8 +32,9 @@ PLEASE HELP:
 
 REQUIREMENTS:
  - Decently powerful router with USB2.0 port which is supported by OpenWRT.
-   It should have 200MHz, 32 MByte RAM and 4 MByte flash. If you want a
-   recommendation that should work out of the box:
+   Minimum requirements are 125 MHz, 16 MByte RAM and 4 GByte flash, but I
+   recommand 250 MHz, 32 MByte RAM and 8 MByte flash. The following models
+   meet or exceed the recommendation and should work out of the box:
    - Asus WL-500gP (brcm47xx, white, end-of-life)
    - Buffalo WZR-HP-G300NH (ar71xx, hardwired antennas)
    - D-Link DIR-825 (ar71xx, white)
