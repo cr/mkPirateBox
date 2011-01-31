@@ -9,7 +9,10 @@ FEATURES:
  - Install this IPKG on your fresh OpenWRT "Backfire", and out comes
    (hopefully) a ready-to-use PirateBox.
  - Now supports devices with 4 MByte flash
- - Tested on Asus WL-500gP, Asus WL-500g and Buffalo WZR-HP-G300NH
+ - Tested on
+   - Asus WL-500gP (brcm47xx)
+   - Asus WL-500g (brcm47xx)
+   - Buffalo WZR-HP-G300NH (ar71xx)
 
 TODO:
  - Test other platforms
@@ -28,8 +31,12 @@ PLEASE HELP:
 REQUIREMENTS:
  - Decently powerful router with USB2.0 port which is supported by OpenWRT.
    It should have 200MHz, 32 MByte RAM and 4 MByte flash. If you want a
-   recommendation: get a Buffalo WZR-HP-G300NH or an Asus WL-500gP.
- - A 125 MHz system works, but HTTP uploads may drop dramatically to
+   recommendation that should work out of the box:
+   - Asus WL-500gP (brcm47xx, white, end-of-life)
+   - Buffalo WZR-HP-G300NH (ar71xx, hardwired antennas)
+   - D-Link DIR-825 (ar71xx, white)
+   - Linksys WRT160NL (ar71xx)
+ - 125 MHz systems work, but HTTP uploads may drop dramatically to
    about 100 KByte/s.
  - An external USB hard drive (UMS compatible) formattet with FAT32.
  - Two ethernet cables
