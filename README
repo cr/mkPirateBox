@@ -67,6 +67,25 @@ INSTALL:
   - To start over or completely uninstall, rm -rf /overlay/* and
     reboot or reflash OpenWRT.
 
+USAGE:
+  - /etc/piratebox.common has the global config on top. If you
+    decide to change the IP address or the ESSID, be sure to
+    activate it with the "setup" command as described below.
+  - Central tool for managing PirateBox is the init script
+    /etc/init.d/piratebox. It support the following commands:
+    - "setup" activates current USB and network configuration as
+      described in /etc/piratebox.common. Only required during
+      initial installation or after config changes.
+    - "init" mounts USB drive, and sets up swap and ext3 image
+      therein (for the huge python installation).
+    - "update" downloads the latest PirateBox files from David
+      Darts' website to USB disk.
+    - "nodns" disables local DNS redirection through dnsmasq
+      which is required for local maintenance work.
+    - "start" and "stop" the PirateBox service, of course. The
+      former also automatically calls "init" and "update" when
+      it detects an un-PirateBox-ified USB disk.
+
 REFERENCES:
  - The PirateBox project:
    http://wiki.daviddarts.com/PirateBox_DIY
