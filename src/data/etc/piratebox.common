@@ -2,7 +2,7 @@
 # PirateBox global config. /etc/init.d/piratebox setup to take effect
 
 pb_ip="192.168.1.1"
-pb_wireless_ssid="PirateBox"
+pb_wireless_ssid="PirateBox - Share Freely"
 pb_hostname="piratebox"
 pb_usbdevice="/dev/sda1"
 pb_usbmount="/mnt/usb"
