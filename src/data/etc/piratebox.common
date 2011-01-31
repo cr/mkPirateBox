@@ -78,7 +78,14 @@ pb_umount() {
 	  pb_ismounted "$pb_extmount" || continue
           if ! umount "$pb_extmount"
           then
-            echo "${initscript}: WARNING: unable to umount ext image" >&2
+            # PirateBox might still be running, so...
+            # silently try to stop PirateBox service
+            pb_stop &>/dev/null
+            sleep 2
+            if ! umount "$pb_extmount"
+            then
+              echo "${initscript}: WARNING: unable to umount ext image" >&2
+            fi
           fi
           losetup -d /dev/loop0
           ;;
