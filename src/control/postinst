@@ -14,9 +14,8 @@ then
   echo "Next time you log in, you must use ssh."
 fi
 
-# configure usb and network
-pb_usbconfig
-pb_netconfig
+# configure USB and network
+/etc/init.d/piratebox setup
 
 # disable web interface, start PirateBox instead
 /etc/init.d/uhttpd stop

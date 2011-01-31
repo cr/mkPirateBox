@@ -1,5 +1,5 @@
 #############################################################################
-# PirateBox global config (do not change)
+# PirateBox global config. /etc/init.d/piratebox setup to take effect
 
 pb_ip="192.168.1.1"
 pb_wireless_ssid="PirateBox"

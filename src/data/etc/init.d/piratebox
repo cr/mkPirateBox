@@ -3,16 +3,18 @@
 NAME=piratebox
 START=80
 STOP=20
-EXTRA_COMMANDS="init update nodns"
-EXTRA_HELP="	init	PirateBoxify a fresh USB disk
+EXTRA_COMMANDS="setup init update nodns"
+EXTRA_HELP="	setup	Activate current USB and entwork configuration
+	init	Mount USB, and PirateBoxify a fresh USB disk
 	update	Update PirateBox files on USB disk
 	nodns	Disable local DNS redirection through dnsmasq"
 
 # include PirateBox shared functionality
 . /etc/piratebox.common
 
-nodns() {
-  pb_nodns
+setup() {
+  pb_usbsetup
+  pb_netconfig
 }
 
 init() {
@@ -21,6 +23,10 @@ init() {
 
 update() {
   pb_update
+}
+
+nodns() {
+  pb_nodns
 }
 
 start() {
