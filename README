@@ -33,9 +33,10 @@ PLEASE HELP:
 REQUIREMENTS:
  - Decently powerful router with USB2.0 port which is supported by OpenWRT.
    Minimum requirements are 125 MHz, 16 MByte RAM and 4 GByte flash, but I
-   recommand 250 MHz, 32 MByte RAM and 8 MByte flash. The following models
+   recommend 250 MHz, 32 MByte RAM and 8 MByte flash. The following models
    meet or exceed the recommendation and should work out of the box:
-   - Asus WL-500gP (brcm47xx, white, end-of-life)
+   - TD-Link TL-WR1043ND (ar71xx, cheap!)
+   - Asus WL-500gP (brcm47xx, white, discontinued)
    - Buffalo WZR-HP-G300NH (ar71xx, hardwired antennas)
    - D-Link DIR-825 (ar71xx, white)
    - Linksys WRT160NL (ar71xx)
@@ -49,8 +50,13 @@ INSTALL:
     I mean really fresh. Do not touch it after you flashed it!
     If you already have an unclean install, do rm -rf /overlay/*
     and reboot the router.
-  - Connect the WAN port to your gateway and a LAN port to your
-    computer. This ensures the router can download packages.
+  - Make sure your Internet router does not use the IP address
+    192.168.1.1 or any other address from the 192.168.1.0 subnet.
+    Set it to 192.168.42.1 (with subnet mask 255.255.255.0),
+    for example.
+  - Connect the WAN port of the PirateBox to your Internet router
+    and one of its LAN ports your computer. This ensures the
+    PirateBox router can download the required packages.
   - Connect your USB drive. The script assumes a single partition
     with a FAT32 file system.
   - telnet into the router on 192.168.1.1.
