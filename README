@@ -16,8 +16,7 @@ FEATURES:
 
 TODO:
  - Test other platforms
- - Does not uninstall cleanly
- - Better error checking
+ - Improve error checking
 
 PLEASE HELP:
  - I expect mkPirateBox v0.2+ to run on many or even most untested router
@@ -38,7 +37,7 @@ REQUIREMENTS:
    - TD-Link TL-WR1043ND (ar71xx, cheap!)
    - Asus WL-500gP (brcm47xx, white, discontinued)
    - Buffalo WZR-HP-G300NH (ar71xx, hardwired antennas)
-   - D-Link DIR-825 (ar71xx, white)
+   - D-Link DIR-825 (ar71xx, white, fast!)
    - Linksys WRT160NL (ar71xx)
  - 125 MHz systems work, but HTTP uploads may drop dramatically to
    about 100 KByte/s.
