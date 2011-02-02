@@ -6,46 +6,46 @@
 # Released under GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
 
 FEATURES:
- - Install this IPKG on your fresh OpenWRT "Backfire", and out comes
-   (hopefully) a ready-to-use PirateBox.
- - Now supports devices with 4 MByte flash
- - Tested on
-   - Asus WL-500gP (brcm47xx)
-   - Asus WL-500g (brcm47xx)
-   - Buffalo WZR-HP-G300NH (ar71xx)
+  - Install this IPKG on your fresh OpenWRT "Backfire", and out comes
+    (hopefully) a ready-to-use PirateBox.
+  - Now supports devices with 4 MByte flash
+  - Tested on
+    - Asus WL-500gP (brcm47xx)
+    - Asus WL-500g (brcm47xx)
+    - Buffalo WZR-HP-G300NH (ar71xx)
 
 TODO:
- - Test other platforms
- - Improve error checking
+  - Test other platforms
+  - Improve error checking
 
 PLEASE HELP:
- - I expect mkPirateBox v0.2+ to run on many or even most untested router
-   models. If something goes wrong, installation will most likely fail
-   during wireless setup. I usually can make it easily work if you help me
-   out. If you decide to try mkPirateBox on an untested router model,
-   please send send me feedback on how it went, including
-   - your router model
-   - output of the command
-     "cat /etc/openwrt_release /etc/config/wireless /etc/config/network".
- - Thanks! :)
+  - I expect mkPirateBox v0.2+ to run on many or even most untested router
+    models. If something goes wrong, installation will most likely fail
+    during wireless setup. I usually can make it easily work if you help me
+    out. If you decide to try mkPirateBox on an untested router model,
+    please send send me feedback on how it went, including
+    - your router model
+    - output of the command
+      "cat /etc/openwrt_release /etc/config/wireless /etc/config/network".
+  - Thanks! :)
 
 REQUIREMENTS:
- - Decently powerful router with USB2.0 port which is supported by OpenWRT.
-   Minimum requirements are 125 MHz, 16 MByte RAM and 4 GByte flash, but I
-   recommend 250 MHz, 32 MByte RAM and 8 MByte flash. The following models
-   meet or exceed the recommendation and should work out of the box:
-   - TD-Link TL-WR1043ND (ar71xx, cheap!)
-   - Asus WL-500gP (brcm47xx, white, discontinued)
-   - Buffalo WZR-HP-G300NH (ar71xx, hardwired antennas)
-   - D-Link DIR-825 (ar71xx, white, fast!)
-   - Linksys WRT160NL (ar71xx)
- - 125 MHz systems work, but HTTP uploads may drop dramatically to
-   about 100 KByte/s.
- - An external USB hard drive (UMS compatible) formattet with FAT32.
-   Keep in mind that some routers are unable to provide sufficient
-   USB power to spin-up HD drives, while USB flash drives should work
-   fine in any case.
- - Two ethernet cables
+  - Decently powerful router with USB2.0 port which is supported by OpenWRT.
+    Minimum requirements are 125 MHz, 16 MByte RAM and 4 GByte flash, but I
+    recommend 250 MHz, 32 MByte RAM and 8 MByte flash. The following models
+    meet or exceed the recommendation and should work out of the box:
+    - TD-Link TL-WR1043ND (ar71xx, cheap!)
+    - D-Link DIR-825 (ar71xx, white, fast!)
+    - Linksys WRT160NL (ar71xx)
+    - Buffalo WZR-HP-G300NH (ar71xx, hardwired antennas)
+    - Asus WL-500gP (brcm47xx, white, discontinued)
+  - 125 MHz systems work, but HTTP uploads drops dramatically to
+    about 100 KByte/s. 400 MHz give you about 500 KByte/s.
+  - An external USB hard drive (UMS compatible) formattet with FAT32.
+    Keep in mind that some routers are unable to provide sufficient
+    USB power to spin-up HD drives, while USB flash drives should work
+    fine in any case.
+  - Two ethernet cables
 
 INSTALL:
   - Install a fresh OpenWRT "Backfire" 10.03.1 onto your router.
