@@ -21,6 +21,25 @@ pb_nodns() {
   cp /tmp/resolv.conf.auto /tmp/resolv.conf
 }
 
+pb_usbwait() {
+  # wait for USB device to show up
+  if [ ! -e "$pb_usbdevice" ]
+  then
+    echo "Please connect USB disk. If it is already plugged-in,"
+    echo "wait for a few seconds, and if nothing happens, please"
+    echo "reconnect the device. Keep in mind that your router's"
+    echo "ports may not be able to supply enough power to"
+    echo "spin-up a USB HDD."
+    while [ ! -e "$pb_usbdevice" ]
+    do
+      sleep 1
+      echo -n "."
+    done
+    echo
+    echo "USB disk is now available. Continuing..."
+  fi
+}
+
 pb_ismounted() {
   mount | grep "on $1 " >/dev/null
 }
@@ -202,6 +221,7 @@ pb_mkextimg() {
 
 pb_init() {
   echo "${initscript}: Mounting external USB storage..."
+
   pb_mount usb
   [ -d "$pb_usbdir" ] || mkdir -p "$pb_usbdir"
 

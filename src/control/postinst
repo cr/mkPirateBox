@@ -3,6 +3,9 @@
 # include PirateBox shared functionality
 . /etc/piratebox.common
 
+# wait for USB disk to show up
+pb_usbwait
+
 # check if root password is not set yet
 if grep '^root:!:' /etc/passwd >/dev/null
 then

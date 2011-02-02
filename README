@@ -1,5 +1,5 @@
 ###########################################################################
-# mkPirateBox v0.2-3
+# mkPirateBox v0.2-4
 # IPKG that installs PirateBox to your fresh OpenWRT router
 # (C) 2011, Christiane Ruetten, cr@23bit.net
 #
@@ -43,13 +43,20 @@ REQUIREMENTS:
  - 125 MHz systems work, but HTTP uploads may drop dramatically to
    about 100 KByte/s.
  - An external USB hard drive (UMS compatible) formattet with FAT32.
+   Keep in mind that some routers are unable to provide sufficient
+   USB power to spin-up HD drives, while USB flash drives should work
+   fine in any case.
  - Two ethernet cables
 
 INSTALL:
   - Install a fresh OpenWRT "Backfire" 10.03.1 onto your router.
     I mean really fresh. Do not touch it after you flashed it!
-    If you already have an unclean install, do rm -rf /overlay/*
-    and reboot the router.
+    If you already have an unclean install, do a reflash or
+    rm -rf /overlay/* and reboot the router.
+  - Please note that some systems don't support easy wipes with
+    the rm -rf /overlay/* method. You can spot these by an empty
+    /verlay directory. In these cases, you mus reflash the
+    OpenWRT image for a clean install.
   - Make sure your Internet router does not use the IP address
     192.168.1.1 or any other address from the 192.168.1.0 subnet.
     Set it to 192.168.42.1 (with subnet mask 255.255.255.0),
@@ -61,7 +68,7 @@ INSTALL:
     with a FAT32 file system.
   - telnet into the router on 192.168.1.1.
   - cd /tmp
-  - wget http://cr.23bit.net/piratebox/piratebox_0.2-3_all.ipk
+  - wget http://cr.23bit.net/piratebox/piratebox_0.2-4_all.ipk
     (Sorry, github only supports https downloads.)
   - opkg update && opkg install piratebox*
   - When prompted, set a root password.
