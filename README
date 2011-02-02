@@ -52,11 +52,8 @@ INSTALL:
   - Install a fresh OpenWRT "Backfire" 10.03.1 onto your router.
     I mean really fresh. Do not touch it after you flashed it!
     If you already have an unclean install, do a reflash or
-    rm -rf /overlay/* and reboot the router.
-  - Please note that some systems don't support easy wipes with
-    the rm -rf /overlay/* method. You can spot these by an empty
-    /verlay directory. In these cases, you mus reflash the
-    OpenWRT image for a clean install.
+    rm -rf /overlay/* and reboot the router. Prefer squashfs
+    images over jffs2 if given a choice.
   - Make sure your Internet router does not use the IP address
     192.168.1.1 or any other address from the 192.168.1.0 subnet.
     Set it to 192.168.42.1 (with subnet mask 255.255.255.0),
