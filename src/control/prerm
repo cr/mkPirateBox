@@ -1,6 +1,6 @@
 #!/bin/ash
 
-# TODO: undo UCI changes, undo dnsmasq patch
+. /etc/piratebox.common
 
 /etc/init.d/luci_fixtime enable
 /etc/init.d/luci_dhcp_migrate enable
@@ -9,3 +9,9 @@
 
 /etc/init.d/piratebox stop
 /etc/init.d/piratebox nodns
+
+# undo configuration
+echo "Resetting OpenWRT config to factory state..."
+pb_undoconfig
+echo "Please reboot for changes to take effect."
+

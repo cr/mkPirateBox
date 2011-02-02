@@ -181,6 +181,22 @@ pb_usbconfig() {
 
 }
 
+pb_undoconfig() {
+  # undo config changes
+  uci delete dhcp.piratebox
+  uci delete firewall.piratebox
+  uci delete fstab.piratebox
+  uci delete fstab.pirateswap
+  uci set "system.@system[0].hostname=OpenWRT"
+  uci set "network.lan.ipaddr=192.168.1.1"
+  uci commit
+  cp /rom/etc/opkg.conf /etc/
+  cp /rom/etc/hosts /etc/
+  cp /rom/etc/init.d/dnsmasq /etc/init.d/
+  [ -d "$pb_usbmount" ] && rmdir "$pb_usbmount"
+  [ -d "$pb_extmount" ] && rmdir "$pb_extmount"
+}
+
 pb_needswap() {
   [ ! -e "$pb_swapimg" ]
 }
