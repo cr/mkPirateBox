@@ -10,11 +10,8 @@ FEATURES:
     comes (hopefully) a ready-to-use PirateBox, a project by NYU
     Professor David Darts.
   - Now supports devices with 4 MByte flash
-  - Tested on
-    - Asus WL-500gP (brcm47xx)
-    - Asus WL-500g (brcm47xx)
-    - Buffalo WZR-HP-G300NH (ar71xx)
-    - Linksys WRT160NL
+  - See https://github.com/cr/mkPirateBox/wiki for current
+    router support status.
 
 TODO:
   - Test other platforms
@@ -41,7 +38,7 @@ REQUIREMENTS:
     - D-Link DIR-825 (ar71xx, white, fast!)
     - Linksys WRT160NL (ar71xx)
     - Buffalo WZR-HP-G300NH (ar71xx, hardwired antennas)
-    - Asus WL-500gP (brcm47xx, white, discontinued)
+    - Asus WL-500g Premium (brcm47xx, white, discontinued)
   - 125 MHz systems work, but HTTP uploads drops dramatically to
     about 100 KByte/s. 400 MHz give you about 500 KByte/s.
   - An external USB hard drive (UMS compatible) formattet with FAT32.
