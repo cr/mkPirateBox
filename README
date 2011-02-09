@@ -29,71 +29,15 @@ PLEASE HELP:
   - Thanks! :)
 
 REQUIREMENTS:
-  - Decently powerful router with USB2.0 port which is supported by
-    OpenWRT. Minimum requirements are 125 MHz, 16 MByte RAM and 4 GByte
-    flash, but I recommend 250 MHz (the more, the better), 32 MByte RAM,
-    and 8 MByte flash. Following models meet or exceed the recommendation
-    and should work out of the box:
-    - TD-Link TL-WR1043ND (ar71xx, cheap!)
-    - D-Link DIR-825 (ar71xx, white, fast!)
-    - Linksys WRT160NL (ar71xx)
-    - Buffalo WZR-HP-G300NH (ar71xx, hardwired antennas)
-    - Asus WL-500g Premium (brcm47xx, white, discontinued)
-  - 125 MHz systems work, but HTTP uploads drops dramatically to
-    about 100 KByte/s. 400 MHz give you about 500 KByte/s.
-  - An external USB hard drive (UMS compatible) formattet with FAT32.
-    Keep in mind that some routers are unable to provide sufficient
-    USB power to spin-up HD drives, while USB flash drives should work
-    fine in any case.
-  - Two ethernet cables
+  - See https://github.com/cr/mkPirateBox/wiki/Requirements
+    and https://github.com/cr/mkPirateBox/wiki/Router-support
 
 INSTALL:
-  - Install a fresh OpenWRT "Backfire" 10.03.1 onto your router.
-    I mean really fresh. Do not touch it after you flashed it!
-    If you already have an unclean install, do a reflash or
-    rm -rf /overlay/* and reboot the router. Prefer squashfs
-    images over jffs2 if given a choice.
-  - Make sure your Internet router does not use the IP address
-    192.168.1.1 or any other address from the 192.168.1.0 subnet.
-    Set it to 192.168.42.1 (with subnet mask 255.255.255.0),
-    for example.
-  - Connect the WAN port of the PirateBox to your Internet router
-    and one of its LAN ports your computer. This ensures the
-    PirateBox router can download the required packages.
-  - Connect your USB drive. The script assumes a single partition
-    with a FAT32 file system.
-  - telnet into the router on 192.168.1.1.
-  - cd /tmp
-  - wget http://cr.23bit.net/piratebox/piratebox_0.2-4_all.ipk
-    (Sorry, github only supports https downloads.)
-  - opkg update && opkg install piratebox*
-  - When prompted, set a root password.
-  - Wait for the setup to finish which is when the open wireless
-    network "PirateBox" appears.
-  - Connect wirelessly and open any web page.
-  - If you see the PirateBox menu, you're done.
-  - You can disconnect the WAN connection now.
-  - To start over or completely uninstall, rm -rf /overlay/* and
-    reboot or reflash OpenWRT.
+  - See https://github.com/cr/mkPirateBox/wiki/Install
 
 USAGE:
-  - /etc/piratebox.common has the global config on top. If you
-    decide to change the IP address or the ESSID, be sure to
-    activate it with the "setup" command as described below.
-  - Central tool for managing PirateBox is the init script
-    /etc/init.d/piratebox. It support the following commands:
-    - "setup" activates current USB and network configuration as
-      described in /etc/piratebox.common. Only required during
-      initial installation or after config changes.
-    - "init" mounts USB drive, and sets up swap and ext3 image
-      therein (for the huge python installation).
-    - "update" downloads the latest PirateBox files from David
-      Darts' website to USB disk.
-    - "nodns" disables local DNS redirection through dnsmasq
-      which is required for local maintenance work.
-    - "start" and "stop" the PirateBox service, of course. The
-      former also automatically calls "init" and "update" when
-      it detects an un-PirateBox-ified USB disk.
+  - See https://github.com/cr/mkPirateBox/wiki/Usage
+  
 
 REFERENCES:
   - The PirateBox project:
