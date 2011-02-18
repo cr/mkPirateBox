@@ -16,6 +16,7 @@ FEATURES:
 TODO:
   - Test other platforms
   - Improve error checking
+  - Does not cleanly update, yet. "opkg remove piratebox" first.
 
 PLEASE HELP:
   - I expect mkPirateBox v0.2+ to run on many or even most untested

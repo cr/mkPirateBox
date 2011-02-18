@@ -1,0 +1,14 @@
+Package: piratebox-preseed
+Version: 0.1-1
+Depends: piratebox (>=0.2-4)
+Provides: 
+Source: package/piratebox-preseed
+Section: net
+Status: unknown ok not-installed
+Essential: no
+Priority: optional
+Maintainer: Christiane Ruetten <cr@23bit.net>
+Architecture: all
+Installed-Size: 8192
+Description: Downloads a set of CC or otherwise free files to pre-seed your PirateBox, see http://wiki.daviddarts.com/PirateBox
+

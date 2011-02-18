@@ -1,0 +1,24 @@
+#!/bin/ash
+
+# include PirateBox shared functionality
+. /etc/piratebox.common
+
+# wait for USB disk to show up
+pb_usbwait
+
+/etc/init.d/piratebox nodns
+
+if [ -d "$pb_share" ]
+then
+  cd "$pb_share"
+  cat /etc/piratebox.preseed \
+    | while read url filename
+      do
+        wget "$url" -O "$filename"
+      done
+else
+  echo "Your PirateBox is not installed correctly." >&2
+  echo "Remove this package and re-install piratebox." >&2
+  exit 5
+fi
+

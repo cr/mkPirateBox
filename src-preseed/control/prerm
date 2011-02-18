@@ -1,0 +1,22 @@
+#!/bin/ash
+
+# include PirateBox shared functionality
+. /etc/piratebox.common
+
+# wait for USB disk to show up
+pb_usbwait
+
+if [ -d "$pb_share" ]
+then
+  cd "$pb_share"
+  cat /etc/piratebox.preseed \
+    | while read url filename
+      do
+        rm -f "$filename"
+      done
+else
+  echo "Your PirateBox is not installed correctly." >&2
+  echo "Remove files manually." >&2
+  exit 5
+fi
+
