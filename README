@@ -1,13 +1,14 @@
 ###########################################################################
-# mkPirateBox v0.2-5
-# IPKG that installs PirateBox to your fresh OpenWRT router
+#
+# LibraryBox v0.2-5
+# based on mkPirateBox v0.2-5
+# IPKG that installs LibraryBox to your fresh OpenWRT router
 # (C) 2011, Christiane Ruetten, cr@23bit.net
 #
 # Released under GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
 
 FEATURES:
-  - Install this IPKG on your fresh OpenWRT "Backfire", and out
-    comes (hopefully) a ready-to-use PirateBox, a project by NYU
+  - A download-only PirateBox, based on the project by NYU
     Professor David Darts.
   - Now supports devices with 4 MByte flash
   - See https://github.com/cr/mkPirateBox/wiki for current
