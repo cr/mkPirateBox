@@ -1,8 +1,8 @@
 #############################################################################
-# PirateBox global config. /etc/init.d/piratebox setup to take effect
+# LibraryBox global config. /etc/init.d/piratebox setup to take effect
 
 pb_ip="192.168.1.1"
-pb_wireless_ssid="PirateBox - Share Freely"
+pb_wireless_ssid="LibraryBox - Free Content"
 pb_hostname="piratebox"
 pb_usbdevice="/dev/sda1"
 pb_usbmount="/mnt/usb"
@@ -296,8 +296,8 @@ pb_update() {
   [ -d "$pb_share" ] || mkdir -p "$pb_share"
   mkdir -p "$pb_share"
   cd "$pb_share"
-  wget http://daviddarts.com/piratebox/piratebox-logo.png -O piratebox-logo.png
-  wget http://daviddarts.com/piratebox/.READ.ME.htm -O .READ.ME.htm
+  wget http://www.jasongriffey.net/images/piratebox-logo.png -O piratebox-logo.png
+  wget http://www.jasongriffey.net/librarybox/README.html -O .READ.ME.htm
   wget http://daviddarts.com/piratebox/.BACK.TO.MENU.htm -O .BACK.TO.MENU.htm
   # adjust hostname
   sed -i "s#http://piratebox#http://$pb_hostname#g" .READ.ME.htm
@@ -319,9 +319,9 @@ local html=$(cat <<EOF
   <b>1.</b> Learn more about the project
     <a href="http://$pb_hostname:8001/.READ.ME.htm"><b>here</b></a>.
 </p>
-<p>
+<!--<p>
   <b>2.</b> Click above to begin sharing.
-</p>
+</p>-->
 <p>
   <b>3.</b> Browse and download files
   <a href="http://$pb_hostname:8001"><b>here</b></a>.
