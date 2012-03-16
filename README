@@ -2,46 +2,35 @@
 #
 # LibraryBox v0.2-5
 # based on mkPirateBox v0.2-5
-# IPKG that installs LibraryBox to your fresh OpenWRT router
-# (C) 2011, Christiane Ruetten, cr@23bit.net
 #
+# Customization files that alter the UI of PirateBox to create a LibraryBox
+#
+# LibraryBox customizations conceived and created by Jason Griffey <griffey@gmail.com>
 # Released under GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
 
 FEATURES:
-  - A download-only PirateBox, based on the project by NYU
-    Professor David Darts.
-  - Now supports devices with 4 MByte flash
-  - See https://github.com/cr/mkPirateBox/wiki for current
-    router support status.
+  - A download-only PirateBox, based on the project by NYU Professor David Darts.
+  - Provides cheap and low-powered digital file distribution for libraries
 
 TODO:
-  - Test other platforms
-  - Improve error checking
-  - Does not cleanly update, yet. "opkg remove piratebox" first.
-
-PLEASE HELP:
-  - I expect mkPirateBox v0.2+ to run on many or even most untested
-    router models. If something goes wrong, I usually can easily make
-    it work if you help me out. If you decide to try mkPirateBox on
-    an untested router model, please send send me feedback on how it
-    went, including
-    - your router model
-    - output of the command
-      "cat /etc/openwrt_release /etc/config/wireless /etc/config/network".
-  - Thanks! :)
+  - Build custom ipk with customizations baked in
+  - Build in auto-sync with Project Gutenberg
 
 REQUIREMENTS:
   - See https://github.com/cr/mkPirateBox/wiki/Requirements
     and https://github.com/cr/mkPirateBox/wiki/Router-support
 
 INSTALL:
-  - See https://github.com/cr/mkPirateBox/wiki/Installation
+  - For PirateBox installation, see https://github.com/cr/mkPirateBox/wiki/Installation
+  - For LibraryBox customization, see http://www.jasongriffey.net/librarybox
 
 USAGE:
-  - See https://github.com/cr/mkPirateBox/wiki/Usage
+  - http://jasongriffey.net/librarybox/use.html
   
 
 REFERENCES:
+  - The LibraryBox Project
+  	http://www.jasongriffey.net/librarybox/
   - The PirateBox project:
     http://wiki.daviddarts.com/PirateBox_DIY
   - OpenWRT - List of supported devices:
