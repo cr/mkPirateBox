@@ -62,14 +62,14 @@
 
 <p>Once you have a working PirateBox, the customizations for LibraryBox are just interface customizations at this point. Further development will result in more and more customizations being baked into the install directly and will likely require the installation of a LibraryBox.ipk rather than the Piratebox.ipk. Once we reach that point these instructions will be depreciated, but in the interim, here’s how you create a LibraryBox.</p>
 
-<p>Once you have a working PirateBox using the instructions here, grab the droopy.py and the piratebox.common files from github, as well as the images/librarybox-logo.png.  The PirateBox doesn’t have FTP, but you can SCP files up. SSH in, move the native PirateBox files just in case something goes wrong so that you can roll back to them if necessary:</p>
+<p>Once you have a working PirateBox using the instructions here, grab the <a href="https://github.com/griffey/LibraryBox/blob/master/droopy.py">droopy.py</a> and the <a href="https://github.com/griffey/LibraryBox/blob/master/piratebox.common">piratebox.common</a> files from github, as well as the images/librarybox-logo.png.  The PirateBox doesn’t have FTP, but you can SCP files up. SSH in, move the native PirateBox files just in case something goes wrong so that you can roll back to them if necessary:</p>
 <p><code>
 mv /etc/piratebox.common /etc/piratebox.backup <br />
 mv /mnt/ext/usr/bin/droopy /mnt/ext/usr/bin/droopy.backup
 </code></p>
-<p>Rename the droopy.py file to just droopy, as the existing file doesn’t have the python extension...it’s just there to make coding locally a bit easier. </p>
+<p>Rename the local droopy.py file to just droopy, as the existing file doesn’t have the python extension...the extension is just there to make coding locally a bit easier. </p>
 
-<p>Then, finally, upload the files from your local machine to the PirateBox using SCP, making sure to put them into their respective directories. </p>
+<p>Then, finally, upload the files from your local machine to the PirateBox using SCP, making sure to put them into their proper directories. </p>
 
 <p>At this point, you should be able to power off the MR-3020, wait a second or two, then turn it back on and attach to the wifi point when it comes back online (usually within 1-2 minutes). If the logo still isn’t correct, you can replace /mnt/usb/PirateBox/Shared/piratebox-logo.png with your downloaded Librarybox logo.
 That should be all...at this point, you should have a portable, download-only digital library that can literally go almost anywhere. </p>
