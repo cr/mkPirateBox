@@ -315,16 +315,17 @@ pb_start() {
 
 # PirateBox Welcome HTML
 local html=$(cat <<EOF
-<p><br>
+<!--<p><br>
   <b>1.</b> Learn more about the project
     <a href="http://$pb_hostname:8001/.READ.ME.htm"><b>here</b></a>.
 </p>
-<!--<p>
+<p>
   <b>2.</b> Click above to begin sharing.
 </p>-->
 <p>
-  <b>3.</b> Browse and download files
-  <a href="http://$pb_hostname:8001"><b>here</b></a>.
+<br />
+<br />
+<a href="http://$pb_hostname:8001"><h2>Download Free Content Here</h2></a>
 </p>
 EOF
 )
