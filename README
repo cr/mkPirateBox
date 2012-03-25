@@ -13,8 +13,11 @@ FEATURES:
   - Provides cheap and low-powered digital file distribution for libraries
 
 TODO:
+  - Change captive portal system to work with iOS devices
+  - General improvement of UI/UX
   - Build custom ipk with customizations baked in
   - Build in auto-sync with Project Gutenberg
+  - Anonymous download statistics for each file, with auto-ranking of download list based on popularity
 
 REQUIREMENTS:
   - See https://github.com/cr/mkPirateBox/wiki/Requirements
