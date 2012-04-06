@@ -13,7 +13,7 @@ FEATURES:
   - Provides cheap and low-powered digital file distribution for libraries
 
 TODO:
-  - Change captive portal system to work with iOS devices
+  - Change captive portal system to work with iOS devices - DONE
   - General improvement of UI/UX
   - Build custom ipk with customizations baked in
   - Build in auto-sync with Project Gutenberg
