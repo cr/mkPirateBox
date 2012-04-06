@@ -324,8 +324,7 @@ local html=$(cat <<EOF
 </p>-->
 <p>
 <br />
-<br />
-<a href="http://$pb_hostname:8001"><h2>Download Free Content Here</h2></a>
+<a href="http://$pb_hostname:8001"><h2>Download Content Here</h2></a>
 </p>
 EOF
 )

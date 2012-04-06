@@ -2,11 +2,22 @@
 # -*- coding: utf-8 -*- 
 
 # Droopy (http://stackp.online.fr/droopy)
-# Copyright 2008 (C) Pierre Duquesne <stackp@online.fr>
-# Licensed under the Python Software Foundation License
-# (http://www.python.org/psf/license/)
+# Copyright 2008-2010 (c) Pierre Duquesne <stackp@online.fr>
+# Licensed under the New BSD License.
+
+#Changes for LibraryBox by Jason Griffey <jasongriffey.net>
+###Removed upload form
 
 # Changelog
+#   20120402 * Return success Message for iOS devices # Thank you "Reventlov"
+#   20120401 * Input of chatbox from outside... extend modularisation
+#   20120317 * MStrubel; no upload of index.html
+#   20110314 * MStrubel; hostname as param
+#   20110310 * MStrubel; Centraized PB-Chat and hostname :)
+#   20110225 * Customized CSS and HTML for PirateBox with Chat
+#            * Added shoutbox iframes to maintmpl, successtmpl & errortmpl
+#            * Added favicon link to maintmpl, successtmpl & errortmpl
+#   20101130 * CSS and HTML update. Switch to the new BSD License.
 #   20100523 * Simplified Chinese translation by Ye Wei.
 #   20100521 * Hungarian translation by Csaba SzigetvÃ¡ri.
 #            * Russian translation by muromec.
@@ -61,11 +72,21 @@ import tempfile
 import socket
 import locale
 
+LOGO = '''\
+ _____                               
+|     \.----.-----.-----.-----.--.--.
+|  --  |   _|  _  |  _  |  _  |  |  |
+|_____/|__| |_____|_____|   __|___  |
+                        |__|  |_____|
+'''
+
 USAGE='''\
 Usage: droopy [options] [PORT]
 
 Options:
   -h, --help                            show this help message and exit
+  -H, --hostname                        set hostname
+  -c, --chatbox                         include something 
   -m MESSAGE, --message MESSAGE         set the message
   -p PICTURE, --picture PICTURE         set the picture
   -d DIRECTORY, --directory DIRECTORY   set the directory to upload files to
@@ -82,14 +103,28 @@ port = 80
 directory = os.curdir
 must_save_options = False
 
+# 20110310 Hostname for links
+hostname_pb = "piratebox.lan"
+
 # -- HTML templates
+
+# 20110310 - Piratebox Chat template
+piratebox_chat = '''
+<iframe
+height="400"
+width="350"
+frameBorder="0"
+src="http://%(hostname)s:8002">
+</iframe>
+'''
+
 
 style = '''<style type="text/css">
 <!--
 body {margin: 0; border: 0; padding: 0px; background-color: #fafafa;
       text-align: center; font-size: 0.9em; font-family: sans-serif;
       padding-top: 20px;}
-#wrap {width: 500px; padding: 0px; margin: auto;
+#wrap {padding: 0px; margin: auto;
        border: 1px dashed #ccc; background-color: white;}
 #wrapform {height: 75px; padding: 50px 20px 0px 20px; text-align: center;
            margin: 0; border: 0; border-bottom: 1px dashed #ccc;}
@@ -108,17 +143,21 @@ body {margin: 0; border: 0; padding: 0px; background-color: #fafafa;
           background-color: orange; margin-top: 13px; width: 100%%;}
 #linkurl a {color: white; font-weight: bold; text-decoration: none;}
 #linkurl a:hover {text-decoration: underline;}
---></style>'''
+--></style>
+
+<!--%(hostname)s-->
+
+'''
 
 userinfo = '''
-  <table id="userinfo"><tr>
-    <td>%(htmlpicture)s</td>
-    <td id="message"> %(message)s </td>
-  </tr></table>
-  '''
+<div class="box">%(htmlpicture)s</div>
+<div id="message" class="box"> %(message)s </div>
+'''
 
-maintmpl = '''<html><head><title>%(maintitle)s</title>
+maintmpl = '''<html><head><LINK rel="shortcut icon" href="http://%(hostname)s:8001/favicon.ico" type="image/x-icon" /><title>%(maintitle)s</title>
 ''' + style + '''
+<center>
+''' + userinfo + '''
 <script language="JavaScript">
 function swap() {
    document.getElementById("form").style.display = "none";
@@ -139,65 +178,87 @@ function onunload() {
    document.getElementById("form").style.display = "block";
    document.getElementById("sending").style.display = "none";	  
 }
-</script></head><body>
+</script></head>
+<body>
 %(linkurl)s
-<div id="wrap">
-  <!--<div id="wrapform">
-    <div id="form">
-      <form method="post" enctype="multipart/form-data" action="">
-        <input name="upfile" type="file">
-        <input value="%(submit)s" onclick="swap()" type="submit">
-    </div>
-    <div id="sending"> %(sending)s &nbsp;
-      <table id="progress"><tr>
-        <td id="cell0"/><td id="cell1"/><td id="cell2"/><td id="cell3"/>
-      </tr></table>
-    </div>
-  </div>-->
-''' + userinfo + '''
-</html>
+<!--<div id="wrapform">
+  <div id="form" class="box">
+    <form method="post" enctype="multipart/form-data" action="">
+      <input name="upfile" type="file">
+      <input value="%(submit)s" onclick="swap()" type="submit">
+    </form>
+  </div>
+  <div id="sending" class="box"> %(sending)s &nbsp;
+    <table id="progress"><tr>
+      <td id="cell0"/><td id="cell1"/><td id="cell2"/><td id="cell3"/>
+    </tr></table>
+  </div>
+</div>-->
+
+%(pb_chat)s 
+
+</body></html>
 '''
 
-successtmpl = '''
-<html>
-<head><title> %(successtitle)s </title>
+successtmpl = '''<html><head><LINK rel="shortcut icon" href="http://%(hostname)s:8001/favicon.ico" type="image/x-icon" /><title>%(successtitle)s</title>
 ''' + style + '''
 </head>
 <body>
-<div id="wrap">
-  <div id="wrapform">
+<center>
+''' + userinfo + '''
+<!--<div id="wrapform">
+  <div class="box">
     %(received)s
     <a href="/"> %(another)s </a>
   </div>
-''' + userinfo + '''
-</div>
+</div>-->
+
+$(pb_chat)s
+
+</center>
 </body>
 </html>
 '''
 
-errortmpl = '''
-<html>
-<head><title> %(errortitle)s </title>
+errortmpl = '''<html><head><LINK rel="shortcut icon" href="http://%(hostname)s:8001/favicon.ico" type="image/x-icon" /><title>%(errortitle)s</title>
 ''' + style + '''
 </head>
 <body>
-  <div id="wrap">
-    <div id="wrapform">
-      %(problem)s
-      <a href="/"> %(retry)s </a>
-    </div>
+<center>
 ''' + userinfo + '''
-</div>
+<!--<div id="wrapform">
+  <div class="box">
+    %(problem)s
+    <a href="/"> %(retry)s </a>
+  </div>
+</div>-->
+
+$(pb_chat)s
+
+</center>
 </body>
 </html>
 ''' 
 
-linkurltmpl = '''<div id="linkurl">
+linkurltmpl = '''<div class="box">
 <a href="http://stackp.online.fr/droopy-ip.php?port=%(port)d"> %(discover)s
 </a></div>'''
 
+# 20120402 Start
+iostmpl = ''' <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+ <HTML>
+       <HEAD>
+               <TITLE>Success</TITLE>
+       </HEAD>
+       <BODY>
+               Success
+       </BODY>
+ </HTML> '''
 
-templates = {"main": maintmpl, "success": successtmpl, "error": errortmpl}
+
+# 20120402                                                            
+templates = { "ios": iostmpl, "main": maintmpl, "success": successtmpl, "error": errortmpl }
+# 20120402 End
 
 # -- Translations
 
@@ -521,6 +582,7 @@ class DroopyFieldStorage(cgi.FieldStorage):
 
 class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
+    protocol_version = 'HTTP/1.0'
     form_field = 'upfile'
 
     def html(self, page):
@@ -554,8 +616,7 @@ class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         # -- Set message and picture
         dico["message"] = message
         if picture != None:
-            dico["htmlpicture"] = '<div id="picture"><img src="/%s"/></div>' %\
-                                                      os.path.basename(picture)
+            dico["htmlpicture"] = '<img src="/%s"/>'% os.path.basename(picture)
         else:
             dico["htmlpicture"] = ""
 
@@ -565,6 +626,11 @@ class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             dico["linkurl"] =  linkurltmpl % dico
         else:
             dico["linkurl"] = ""
+
+        # 20110314 Start - add hostname in template var
+        dico["hostname"] = hostname_pb 
+        dico["pb_chat"]  = piratebox_chat
+        # 20110314 End
 
         return templates[page] % dico
 
@@ -576,12 +642,12 @@ class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_header('Content-type', mimetypes.guess_type(picture)[0]) 
             self.end_headers()
             self.wfile.write(open(picture, 'rb').read())
+# 20120402 Start
+        elif self.path == '/library/test/success.html':
+            self.send_html(self.html("ios"))
+# 20120402 End
         else:
-            # send the upload form
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html; charset=utf-8')
-            self.end_headers()
-            self.wfile.write(self.html("main").encode('utf-8'))
+            self.send_html(self.html("main"))
 
 
     def do_POST(self):
@@ -602,7 +668,19 @@ class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             fileitem = form[self.form_field]
             filename = self.basename(fileitem.filename).decode('utf-8')
             if filename == "":
-                raise Exception("Empty filename")
+                self.send_response(303)
+                self.send_header('Location', '/')
+                self.end_headers()
+                return
+	
+	#20120317 Start
+	    if filename.lower() == "index.html" or filename.lower() == "index.htm":
+                   self.send_response(303)
+                   self.send_header('Location', '/')
+                   self.end_headers()
+                   return
+	#20120317 End
+            
             localpath = os.path.join(directory, filename).encode('utf-8')
             root, ext = os.path.splitext(localpath)
             i = 1
@@ -623,17 +701,17 @@ class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.log_message("Received: %s", os.path.basename(localpath))
 
             # -- Reply
-            self.send_response(200)
-            self.send_header('Content-type','text/html; charset=utf-8')
-            self.end_headers()
-            self.wfile.write(self.html("success").encode('utf-8'))
+            self.send_html(self.html("success"))
 
         except Exception, e:
             self.log_message(repr(e))
-            self.send_response(200)
-            self.send_header('Content-type','text/html; charset=utf-8')
-            self.end_headers()
-            self.wfile.write(self.html("error").encode('utf-8'))
+            self.send_html(self.html("error"))
+
+    def send_html(self, htmlstr):
+        self.send_response(200)
+        self.send_header('Content-type','text/html; charset=utf-8')
+        self.end_headers()
+        self.wfile.write(htmlstr.encode('utf-8'))
 
     def basename(self, path):
         """Extract the file base name (some browsers send the full file path).
@@ -642,9 +720,26 @@ class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             path = mod.basename(path)
         return path
 
+    def handle(self):
+        try:
+            BaseHTTPServer.BaseHTTPRequestHandler.handle(self)
+        except socket.error, e:
+            self.log_message(str(e))
+            raise Abort()
+
+
+class Abort(Exception): pass
+
 
 class ThreadedHTTPServer(SocketServer.ThreadingMixIn,
-                         BaseHTTPServer.HTTPServer):   pass
+                         BaseHTTPServer.HTTPServer):
+
+    def handle_error(self, request, client_address):
+        # Override SocketServer.handle_error
+        exctype = sys.exc_info()[0]
+        if not exctype is Abort:
+            BaseHTTPServer.HTTPServer.handle_error(self,request,client_address)
+
 
 # -- Options
 
@@ -699,7 +794,9 @@ def parse_args(cmd=None):
 
     Parse sys.argv[1:] if no argument is passed.
     """
-    global picture, message, port, directory, must_save_options
+# 20110314 added hostname 
+# 20120401 added piratebox_chat
+    global picture, message, port, directory, must_save_options , hostname_pb , piratebox_chat
 
     if cmd == None:
         cmd = sys.argv[1:]
@@ -709,8 +806,9 @@ def parse_args(cmd=None):
             
     opts, args = None, None
     try:
-        opts, args = getopt.gnu_getopt(cmd, "p:m:d:h",
-                                       ["picture=","message=",
+# 20110314 - Added Hostname as opt
+        opts, args = getopt.gnu_getopt(cmd, "c:H:p:m:d:h",
+                                       ["chatbox=","hostname=","picture=","message=",
                                         "directory=", "help",
                                         "save-config","delete-config"])
     except Exception, e:
@@ -720,7 +818,14 @@ def parse_args(cmd=None):
     for o,a in opts:
         if o in ["-p", "--picture"] :
             picture = os.path.expanduser(a)
-
+# 20110314 Start
+        elif o in ["-H", "--hostname" ] :
+            hostname_pb = a
+# 20110314 End
+# 20120401 Start
+        elif o in ["-c", "--chatbox" ] :
+            piratebox_chat = a 
+# 20120401 End
         elif o in ["-m", "--message"] :
             message = a
                 
@@ -758,12 +863,13 @@ def run():
     """Run the webserver."""
     socket.setdefaulttimeout(3*60)
     server_address = ('', port)
-    HTTPUploadHandler.protocol_version = "HTTP/1.0"
     httpd = ThreadedHTTPServer(server_address, HTTPUploadHandler)
     httpd.serve_forever()
 
 
 if __name__ == '__main__':
+    print LOGO
+
     config_found = load_options()
     parse_args()
 
@@ -778,6 +884,7 @@ if __name__ == '__main__':
 
     print "Files will be uploaded to %s" % directory
     try:
+        print
         print "HTTP server running... Check it out at http://localhost:%d"%port
         run()
     except KeyboardInterrupt:
