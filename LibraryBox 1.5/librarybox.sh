@@ -17,7 +17,7 @@ cp $path/index.html /opt/piratebox/chat/;
 cp $path/piratebox-logo-small.png /opt/piratebox/src/;
 cp $path/piratebox-logo.png /opt/piratebox/src/;
 cp $path/piratebox.conf /opt/piratebox/conf/;
-cp $path/wireless /etc/config/wireless/;
+cp $path/wireless /etc/config/;
 
 cp $path/READ.ME.htm /opt/piratebox/src/; 
 mv /opt/piratebox/src/READ.ME.htm /opt/piratebox/src/.READ.ME.htm;
