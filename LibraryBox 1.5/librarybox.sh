@@ -8,7 +8,6 @@ then
 else
   path="$usrpath"
 fi
-echo "Copying from $path"
 echo "Making your LibraryBox..."
 
 cp $path/droopy /opt/piratebox/bin/;
@@ -18,7 +17,6 @@ cp $path/piratebox-logo-small.png /opt/piratebox/src/;
 cp $path/piratebox-logo.png /opt/piratebox/src/;
 cp $path/piratebox.conf /opt/piratebox/conf/;
 cp $path/wireless /etc/config/;
-
 cp $path/READ.ME.htm /opt/piratebox/src/; 
 mv /opt/piratebox/src/READ.ME.htm /opt/piratebox/src/.READ.ME.htm;
 
