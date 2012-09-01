@@ -11,13 +11,15 @@ fi
 echo "Making your LibraryBox..."
 
 cp $path/droopy /opt/piratebox/bin/;
+chmod ug+x /opt/piratebox/bin/droopy
 cp $path/hosts /opt/piratebox/conf/;
 cp $path/index.html /opt/piratebox/chat/;
 cp $path/piratebox-logo-small.png /opt/piratebox/src/;
 cp $path/piratebox-logo.png /opt/piratebox/src/;
+cp $path/piratebox-logo.png /opt/piratebox/share/;
 cp $path/piratebox.conf /opt/piratebox/conf/;
-cp $path/wireless /etc/config/;
-cp $path/READ.ME.htm /opt/piratebox/src/; 
-mv /opt/piratebox/src/READ.ME.htm /opt/piratebox/src/.READ.ME.htm;
+cp $path/READ.ME.htm /opt/piratebox/share/; 
+mv /opt/piratebox/share/READ.ME.htm /opt/piratebox/share/.READ.ME.htm;
+python /mnt/usb/librarybox/alter_SSID.py
 
 echo "Done! Enjoy your LibraryBox!"

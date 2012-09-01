@@ -13,4 +13,4 @@ echo "Removing Chatbox"
 cp $path/piratebox.nochat.conf /opt/piratebox/conf/;
 mv /opt/piratebox/conf/piratebox.nochat.conf /opt/piratebox/conf/piratebox.conf
 
-echo "Done! Enjoy your LibraryBox!"
+echo "Done! Reboot your MR3020 to enjoy your LibraryBox!"

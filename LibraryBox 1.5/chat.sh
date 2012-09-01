@@ -12,4 +12,4 @@ echo "Installing Chatbox"
 
 cp $path/piratebox.conf /opt/piratebox/conf/;
 
-echo "Done! Enjoy your LibraryBox!"
+echo "Done! Reboot your MR3020 to enjoy your LibraryBox!"
