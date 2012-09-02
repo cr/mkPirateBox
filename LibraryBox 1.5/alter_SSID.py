@@ -16,7 +16,6 @@ def alter_SSID():
     source.close()
     destination.close()
     
-    remove('/etc/config/wireless')
     rename('/etc/config/wireless_new', '/etc/config/wireless')
 
 if __name__=="__main__":
