@@ -1,20 +1,20 @@
 #!/usr/bin/env python
 from os import remove, rename
-from sys import argv
 
 def alter_SSID():
     """
     customize the SSID for Librarybox
-    if a command-line argument is taken, it will use that as the SSID
-    otherwise it will default to Librarybox - Free Content
+    prompts user for SSID (defaults to "Librarybox - Free Content")
     """
+    mySSID = raw_input('Please choose an SSID (press enter for "Librarybox - Free Content"):')
+    print mySSID
     source = open('/etc/config/wireless', 'r')
     destination = open('/etc/config/wireless_new', 'w')
 	
     for line in source:
         if (line.find('PirateBox - Share Freely') > -1):
-            if argv[1]:
-                line = line.replace('PirateBox - Share Freely', argv[1])
+            if mySSID:
+                line = line.replace('PirateBox - Share Freely', mySSID)
             else:
                 line = line.replace('PirateBox - Share Freely', 'LibraryBox - Free Content!')
         destination.write(line)
