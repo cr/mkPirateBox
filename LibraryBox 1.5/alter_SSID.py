@@ -7,7 +7,7 @@ def alter_SSID():
     prompts user for SSID (defaults to "Librarybox - Free Content")
     """
     mySSID = raw_input('Please choose an SSID (press enter for "Librarybox - Free Content"):')
-    print mySSID
+
     source = open('/etc/config/wireless', 'r')
     destination = open('/etc/config/wireless_new', 'w')
 	
