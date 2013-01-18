@@ -4,7 +4,6 @@ from os import remove, rename
 def alter_SSID():
     """
     customize the SSID for Librarybox
-    prompts user for SSID (defaults to "Librarybox - Free Content")
     """
     mySSID = raw_input('Please choose an SSID (press enter for "Librarybox - Free Content"):')
 
@@ -13,10 +12,7 @@ def alter_SSID():
 	
     for line in source:
         if (line.find('PirateBox - Share Freely') > -1):
-            if mySSID:
-                line = line.replace('PirateBox - Share Freely', mySSID)
-            else:
-                line = line.replace('PirateBox - Share Freely', 'LibraryBox - Free Content!')
+            line = line.replace('PirateBox - Share Freely', 'LibraryBox - Free Content!')
         destination.write(line)
 
     source.close()
