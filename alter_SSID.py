@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 from os import remove, rename
+from sys import argv
 
 def alter_SSID():
     """
     customize the SSID for Librarybox
     """
-    mySSID = raw_input('Please choose an SSID (press enter for "Librarybox - Free Content"):')
-
     source = open('/etc/config/wireless', 'r')
     destination = open('/etc/config/wireless_new', 'w')
 	
