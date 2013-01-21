@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from os import remove, rename
+from sys import argv
 
 def alter_SSID():
     """
