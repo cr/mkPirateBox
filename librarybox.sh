@@ -19,6 +19,7 @@ cp $path/piratebox-logo.png /opt/piratebox/src/;
 cp $path/piratebox-logo.png /opt/piratebox/share/;
 cp $path/piratebox.conf /opt/piratebox/conf/;
 cp $path/READ.ME.htm /opt/piratebox/share/; 
+cp $path/network /etc/config/;
 mv /opt/piratebox/share/READ.ME.htm /opt/piratebox/share/.READ.ME.htm;
 export LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib
 python /mnt/usb/librarybox/alter_SSID.py
