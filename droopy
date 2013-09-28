@@ -6,6 +6,7 @@
 # Licensed under the New BSD License.
 
 # Changelog
+#   20130928 * Return success Message for iOS7 devices 
 #   20120402 * Return success Message for iOS devices # Thank you "Reventlov"
 #   20120401 * Input of chatbox from outside... extend modularisation
 #   20120317 * MStrubel; no upload of index.html
@@ -68,6 +69,8 @@ import shutil
 import tempfile
 import socket
 import locale
+# 20130928
+import re
 
 LOGO = '''\
  _____                               
@@ -619,6 +622,11 @@ class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         elif self.path == '/library/test/success.html':
             self.send_html(self.html("ios"))
 # 20120402 End
+# 20130928 Start
+	elif re.match( r"CaptiveNetworkSupport" , self.headers['user-agent'] ):
+		self.log_message("iOS CPA request")
+		self.send_html(self.html("ios"))
+# 20130928 End
         else:
             self.send_html(self.html("main"))
 
