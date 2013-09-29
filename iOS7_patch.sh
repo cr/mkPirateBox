@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "Press return, or enter custom path to /librarybox"
+echo "Press return to patch your LibraryBox v1.5..."
 read usrpath
 
 if [ "$usrpath" = "" ]
